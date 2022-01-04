@@ -4,6 +4,13 @@ spring:
   application:
     name: com.iteriam.calculator
 
+logging:
+  level:
+    com.iteriam.calculator: DEBUG
+    org.springframework: WARN
+    org.springframework.data: WARN
+    org.springframework.web: WARN
+
 server:
   port: 8080
   servlet:
