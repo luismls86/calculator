@@ -1,0 +1,10 @@
+# application.yml
+
+spring:
+  application:
+    name: com.iteriam.calculator
+
+server:
+  port: 8080
+  servlet:
+    contextPath: /api
