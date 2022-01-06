@@ -7,15 +7,20 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Data
-@NoArgsConstructor
 public abstract class Operation implements Serializable {
     protected BigDecimal operandOne;
     protected BigDecimal operandTwo;
     protected OperatorEnum operator;
     protected BigDecimal result;
 
+    public Operation() {
+        operandOne = new BigDecimal(0);
+        operandTwo = new BigDecimal(0);
+    }
+    
     public Operation(BigDecimal operandOne) {
         this.operandOne = operandOne;
+        this.operandTwo = new BigDecimal(0);
     }
 
     public Operation(BigDecimal operandOne, BigDecimal operandTwo) {
