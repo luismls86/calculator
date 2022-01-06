@@ -16,6 +16,7 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<jacoco-maven-plugin.version>0.7.7.201606060606</jacoco-maven-plugin.version>
+		<modelmapper.version>3.0.0</modelmapper.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -49,6 +50,11 @@
 			<version>1.0.0</version>
 			<scope>system</scope>
 			<systemPath>${basedir}/src/main/resources/lib/tracer-1.0.0.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+			<version>${modelmapper.version}</version>
 		</dependency>
 	</dependencies>
 
