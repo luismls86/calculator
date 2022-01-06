@@ -1,7 +1,11 @@
 package com.iteriam.calculator.controller;
 
+import com.iteriam.calculator.common.exception.CustomException;
+import com.iteriam.calculator.service.dto.OperationDTO;
 import com.iteriam.calculator.common.enums.OperatorEnum;
+import com.iteriam.calculator.service.BasicOperationService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,13 +18,21 @@ import java.math.BigDecimal;
 @RequestMapping("/basic-operation/")
 public class BasicOperationController {
 
+    @Autowired
+    BasicOperationService basicOperationService;
+
     @GetMapping(
             path = "/{operator}",
             produces = MediaType.APPLICATION_JSON_VALUE )
-    public ResponseEntity<> operate(@PathVariable("operator") OperatorEnum operator,
+    public ResponseEntity<OperationDTO> operate(@PathVariable("operator") OperatorEnum operator,
                                           @RequestParam("op1") BigDecimal operandOne,
                                           @RequestParam("op2") BigDecimal operandTwo) {
-        return new ResponseEntity<>(HttpStatus.OK);
+        try {
+            OperationDTO dto = basicOperationService.operate(operator, operandOne, operandTwo);
+            return new ResponseEntity<>(dto, HttpStatus.OK);
+        } catch (CustomException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }
