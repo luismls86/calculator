@@ -17,7 +17,11 @@ import java.math.BigDecimal;
 public class BasicOperationServiceImpl implements BasicOperationService {
 
     private ModelMapper mapper = new ModelMapper();
-    private TracerImpl tracer = new TracerImpl();
+    private TracerImpl tracer;
+
+    public BasicOperationServiceImpl(TracerImpl tracer) {
+        this.tracer = tracer;
+    }
 
     @Override
     public OperationDTO operate(OperatorEnum operator, BigDecimal operandOne, BigDecimal operandTwo) throws CustomException {

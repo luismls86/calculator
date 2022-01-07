@@ -4,6 +4,7 @@ import com.iteriam.calculator.common.enums.OperatorEnum;
 import com.iteriam.calculator.common.exception.CustomException;
 import com.iteriam.calculator.service.dto.OperationDTO;
 import com.iteriam.calculator.service.implementation.BasicOperationServiceImpl;
+import io.corp.calculator.TracerImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,11 +17,12 @@ public class BasicOperationServiceUnitTest {
     private BasicOperationService basicOperationService;
     private BigDecimal operandOne;
     private BigDecimal operandTwo;
-
+    private TracerImpl tracer;
 
     @BeforeEach
     void initialize() {
-        basicOperationService = new BasicOperationServiceImpl();
+        tracer = new TracerImpl();
+        basicOperationService = new BasicOperationServiceImpl(tracer);
         operandOne = new BigDecimal(4);
         operandTwo = new BigDecimal(6);
     }
