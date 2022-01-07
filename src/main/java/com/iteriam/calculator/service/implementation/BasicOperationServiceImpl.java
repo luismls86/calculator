@@ -6,7 +6,6 @@ import com.iteriam.calculator.common.enums.OperatorEnum;
 import com.iteriam.calculator.service.BasicOperationService;
 import io.corp.calculator.TracerImpl;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
@@ -15,7 +14,6 @@ import java.math.BigDecimal;
 @Slf4j
 public class BasicOperationServiceImpl implements BasicOperationService {
 
-    private ModelMapper mapper = new ModelMapper();
     private TracerImpl tracer;
 
     public BasicOperationServiceImpl(TracerImpl tracer) {
