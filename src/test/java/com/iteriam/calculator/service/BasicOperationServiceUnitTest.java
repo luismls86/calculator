@@ -2,7 +2,6 @@ package com.iteriam.calculator.service;
 
 import com.iteriam.calculator.common.enums.OperatorEnum;
 import com.iteriam.calculator.common.exception.CustomException;
-import com.iteriam.calculator.service.dto.OperationDTO;
 import com.iteriam.calculator.service.implementation.BasicOperationServiceImpl;
 import io.corp.calculator.TracerImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -30,17 +29,15 @@ public class BasicOperationServiceUnitTest {
     @Test
     void basicOperationService_operateWithAnAddition_returnCorrectAddition() throws CustomException {
         OperatorEnum operator = OperatorEnum.add;
-        OperationDTO operationExpected = new OperationDTO(operandOne, operandTwo, operator, new BigDecimal(10));
-        OperationDTO operation = basicOperationService.operate(operator, operandOne, operandTwo);
-        assertThat(operation.equals(operationExpected));
+        BigDecimal result = basicOperationService.operate(operator, operandOne, operandTwo);
+        assertThat(result == new BigDecimal(10));
     }
 
     @Test
     void basicOperationService_operateWithASubtraction_returnCorrectSubtraction() throws CustomException {
         OperatorEnum operator = OperatorEnum.sub;
-        OperationDTO operationExpected = new OperationDTO(operandOne, operandTwo, operator, new BigDecimal(-2));
-        OperationDTO operation = basicOperationService.operate(operator, operandOne, operandTwo);
-        assertThat(operation.equals(operationExpected));
+        BigDecimal result = basicOperationService.operate(operator, operandOne, operandTwo);
+        assertThat(result == new BigDecimal(-2));
     }
 
 }
