@@ -25,6 +25,20 @@ Calculator basic operations
 - **Addition** of two big decimal numbers
 - **Subtraction** of two big decimal numbers
 
+## Decisions
+
+- Writing integration tests and unit tests before writing code trying to follow the TDD philosophy.
+- Creating an Operator enum and taking it as parameter in the controller to limit the 
+  kind of operations the user can do, with another operation the rest api returns a 
+  bad request, because of that there are not Exceptions or testing for invalid operations.
+- Creating operations as beans with a base abstract class (Operation) to implement with polymorphism 
+  the method calculate on each operation (Addition, Subtraction).
+- Associating in the enum the class of each operation to be able to instantiate the specific class of the
+  operation dynamically with reflection in the service layer. 
+- When a new operation will need to be created only it is necessary to create the specific bean of the operation
+  and to add this operation to the enum.
+  
+
 ## Installing and execution
 
 To install, compile and package a jar artifact it is necessary execute the following
@@ -63,12 +77,7 @@ Example:
 **Result body**
 
 ```
-{
-    "operandOne": 14.755,
-    "operandTwo": 21.35,
-    "operator": "add",
-    "result": 36.105
-}
+36.105
 ```
 
 
@@ -83,11 +92,22 @@ Example:
 **Result body:**
 
 ```
+1.32
+```
+
+#### Other operations
+```GET /api/basic-operation/other?op1={op1}&op2={op2}```
+
+Example:
+
+```GET http://localhost:8080/api/basic-operation/other?op1=6.32&op2=5```
+
+**Result body:**
+
+```
 {
-    "operandOne": 6.32,
-    "operandTwo": 5,
-    "operator": "sub",
-    "result": 1.32
+    "status": 400,
+    "error": "Bad Request"
 }
 ```
 
