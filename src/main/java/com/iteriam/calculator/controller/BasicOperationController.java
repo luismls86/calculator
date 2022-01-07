@@ -1,7 +1,6 @@
 package com.iteriam.calculator.controller;
 
 import com.iteriam.calculator.common.exception.CustomException;
-import com.iteriam.calculator.service.dto.OperationDTO;
 import com.iteriam.calculator.common.enums.OperatorEnum;
 import com.iteriam.calculator.service.BasicOperationService;
 import lombok.extern.slf4j.Slf4j;
@@ -24,12 +23,12 @@ public class BasicOperationController {
     @GetMapping(
             path = "/{operator}",
             produces = MediaType.APPLICATION_JSON_VALUE )
-    public ResponseEntity<OperationDTO> operate(@PathVariable("operator") OperatorEnum operator,
+    public ResponseEntity<BigDecimal> operate(@PathVariable("operator") OperatorEnum operator,
                                           @RequestParam("op1") BigDecimal operandOne,
                                           @RequestParam("op2") BigDecimal operandTwo) {
         try {
-            OperationDTO dto = basicOperationService.operate(operator, operandOne, operandTwo);
-            return new ResponseEntity<>(dto, HttpStatus.OK);
+            BigDecimal result = basicOperationService.operate(operator, operandOne, operandTwo);
+            return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (CustomException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
