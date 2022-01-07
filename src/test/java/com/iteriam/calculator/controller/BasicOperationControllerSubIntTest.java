@@ -10,9 +10,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
@@ -33,32 +34,30 @@ public class BasicOperationControllerSubIntTest {
 
     @Test
     void basicOperationController_operationSubWithPositiveOperands_returnCorrectSubtraction() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders
+        MvcResult response = mockMvc.perform(MockMvcRequestBuilders
                 .get("/basic-operation/{operator}", operator)
                 .param("op1", "1")
                 .param("op2", "6")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.operandOne").value("1"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.operandTwo").value("6"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.operator").value(operator.toString()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.result").value("-5"));
+                .andReturn();
+        String result = response.getRequest().getContentAsString();
+        assertThat(result == "-5");
     }
 
     @Test
     void basicOperationController_operationSubWithNegativeOperands_returnCorrectSubtraction() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders
+        MvcResult response = mockMvc.perform(MockMvcRequestBuilders
                 .get("/basic-operation/{operator}", operator)
                 .param("op1", "-1")
                 .param("op2", "-6")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.operandOne").value("-1"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.operandTwo").value("-6"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.operator").value(operator.toString()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.result").value("5"));
+                .andReturn();
+        String result = response.getRequest().getContentAsString();
+        assertThat(result == "5");
     }
 
 }
