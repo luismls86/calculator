@@ -2,7 +2,6 @@ package com.iteriam.calculator.service.implementation;
 
 import com.iteriam.calculator.bean.Operation;
 import com.iteriam.calculator.common.exception.CustomException;
-import com.iteriam.calculator.service.dto.OperationDTO;
 import com.iteriam.calculator.common.enums.OperatorEnum;
 import com.iteriam.calculator.service.BasicOperationService;
 import io.corp.calculator.TracerImpl;
@@ -24,7 +23,7 @@ public class BasicOperationServiceImpl implements BasicOperationService {
     }
 
     @Override
-    public OperationDTO operate(OperatorEnum operator, BigDecimal operandOne, BigDecimal operandTwo) throws CustomException {
+    public BigDecimal operate(OperatorEnum operator, BigDecimal operandOne, BigDecimal operandTwo) throws CustomException {
 
         try {
             String operationTrace = new StringBuilder()
@@ -38,9 +37,9 @@ public class BasicOperationServiceImpl implements BasicOperationService {
             Operation operation = (Operation) clazz.getDeclaredConstructor(BigDecimal.class, BigDecimal.class)
                     .newInstance(operandOne, operandTwo);
             operation.calculate();
-            OperationDTO operationDTO = mapper.map(operation, OperationDTO.class);
-            tracer.trace(operationDTO);
-            return operationDTO;
+            BigDecimal result = operation.getResult();
+            tracer.trace(result);
+            return result;
         } catch (InstantiationException | IllegalAccessException | ClassNotFoundException | InvocationTargetException | NoSuchMethodException e) {
             log.error(e.getLocalizedMessage());
             tracer.trace(e);
